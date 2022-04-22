@@ -1,27 +1,24 @@
 import express from 'express';
 import db from './config/dbConnect.js';
+import livros from './models/Livro.js';
+import routes from './routes/index.js';
 
 db.on('error', console.log.bind(console, 'Erro de conexão'));
 db.once('open', () => {
-    console.log('conexão com o banco feita com sucesso');
+    console.log('Conexão com o banco feita com sucesso');
 })
 
 const app = express();
 
 app.use(express.json());
 
-const livros = [
+routes(app);
+
+/* const livros = [
     { id: 1, "titulo": "Senhor dos Aneis"},
     { id: 2, "titulo": "O Hobbit" }
 ]
-
-app.get('/', (req, res) => {
-    res.status(200).send('Curso de Node')
-})
-
-app.get('/livros', (req, res) => {
-    res.status(200).json(livros)
-})
+ */
 
 app.get('/livros/:id', (req, res) => {
     let index = buscaLivro(req.params.id);
